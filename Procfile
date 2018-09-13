@@ -1,1 +1,1 @@
-worker: pythin madcmd.py
+worker: python madcmd.py
