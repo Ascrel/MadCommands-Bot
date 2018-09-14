@@ -299,7 +299,7 @@ async def tutorial(ctx, args=None):
         await bot.say(embed=embed)
     elif args == "list":
         embed = discord.Embed(name="Tutorials List", description="", color=0x00ffff)
-        embed.add_field(name="Page 1", value="/heal", inline=True)
+        embed.add_field(name="Page 1", value="Heal\nCalculate-Activity", inline=True)
         embed.set_footer(text="Type -tutorial list <page> to go to another page // Type -tutorial <command_name> to get the info of the command (usage, description, name, code)", icon_url=embed.Empty)
         await bot.say(embed=embed)
     elif args == "heal":
