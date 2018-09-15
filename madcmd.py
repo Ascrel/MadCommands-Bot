@@ -3,13 +3,21 @@
 import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
-import os
+import json
 import asyncio
 
+
+async def get_pre(bot, message):
+    fileopen = message.server.id + ".json"
+    file = open(fileopen, "r", encoding="utf-8")
+    predata = json.load(file)
+    prefix = predata["prefix"]
+    return prefix
+
 Client = discord.Client()
-bot = commands.Bot(command_prefix='-')
+bot = commands.Bot(command_prefix=get_pre)
 bot.remove_command("help")
-description = "-help | XMagmaCreeperX"
+description = "-cmd | XMagmaCreeperX"
 
 @bot.event
 async def on_ready():
@@ -24,6 +32,12 @@ async def on_ready():
 
 @bot.event
 async def on_server_join(server):
+    fileopen = server.id + ".json"
+    file = open(fileopen, "w", encoding="utf-8")
+    data = {}
+    data["prefix"] = "-"
+    json.dump(data, file, ensure_ascii=False)
+    file.close()
     await bot.send_message(server.owner, "Thank you **{}** for inviting me to your server: **{}**!\nMy prefix  is **-**\nType **-cmd** for the help menu.\n\nThis bot was coded by XMagmaCreeperX#3657".format(server.owner, server.name))
     me = await bot.get_user_info('352898973578690561')
     await bot.send_message(me, "===============================\nI have joined the server:\nName: **{}**\nID: **{}**\nOwner: **{}**\n\nIm in {} servers\n===============================".format(server.name, server.id, server.owner, len(bot.servers)))
@@ -246,7 +260,7 @@ async def report(ctx, *, args=None):
 async def cmd(ctx, command=None):
     if command == None:
         embed = discord.Embed(name="", description="Here is a list of available commands.", color=0x00FFFF)
-        embed.add_field(name="Commands", value="-cmd\n-help\n-tutorial\n-tutadd\n-invite\n-report", inline=True)
+        embed.add_field(name="Commands", value="-cmd\n-help\n-tutorial\n-tutadd\n-setprefix\n-invite\n-report", inline=True)
         embed.set_footer(text="Type -cmd <command> to get more info about a specific command.", icon_url=embed.Empty)
         await bot.say(embed=embed)
     elif command == "cmd":
@@ -299,13 +313,13 @@ async def tutorial(ctx, args=None):
         await bot.say(embed=embed)
     elif args == "list":
         embed = discord.Embed(name="Tutorials List", description="", color=0x00ffff)
-        embed.add_field(name="Page 1", value="- Heal\n- Calculate-Activity", inline=True)
+        embed.add_field(name="Page 1", value="Heal\nActivity", inline=True)
         embed.set_footer(text="Type -tutorial list <page> to go to another page // Type -tutorial <command_name> to get the info of the command (usage, description, name, code)", icon_url=embed.Empty)
         await bot.say(embed=embed)
     elif args == "heal":
         await bot.say("**Command Name:** Heal.\n**Command Description:** Heal yourself or another player.\n**Command Usage:** /heal [player]\n**Command Author:** XMagmaCreeperX#3657\n**Command Code:**\n```\ncmd create heal Heal your self or another player\ncmd add heal let %player% = %args%[1]\ncmd add heal if varset(%player%) then goto 6\ncmd add heal treat %p% 20\ncmd add heal message %p% §aYou have been healed!\ncmd add heal exit\ncmd add heal if %player% notin onlineplayers() then message %p% §c%player% is not online!\ncmd add heal if %player% notin onlineplayers() then exit\ncmd add heal treat %player% 20\ncmd add heal message %p% §aHealed %player%!\ncmd add heal exit\n```")
     elif args == "calculate-activity":
-        await bot.say("**Command Name:** Calculate-Activity.\n**Command Description:** Calculate how long players have been online.\n**Command Usage:** This command is automatic, you don't manually use it.\n**Command Author**: Ammar#7494\n**Command Code:**\n```\ncmd create join Login event | Not for manual use\ncmd add join load %last-join%\ncmd add join let %last-join%[%p%] = %time%\ncmd add join save %last-join%\ncmd unregister join\ncmd trigger login join\n\ncmd create leave Leave event | Not for manual use\ncmd add leave load %last-join%\ncmd add leave %elapsed% = %time% - %last-join%[%p%]\ncmd add leave load %activity%\ncmd add leave if varset(%activity%[%p%]) = %false% then %activity%[%p%] = 0\ncmd add leave %activity%[%p%] = %activity%[%p%] + %elapsed%\ncmd add leave save %activity%\ncmd unregister leave\ncmd trigger leave leave\n```")
+        await bot.say("**Command Name:** Calculate-Activity.\n**Command Description:** Calculate how long players have been online/\n**Command Usage:** This command is automatic, you don't manually use it\n**Command Author**: Ammar#7494\n**Command Code:**\n```\ncmd create join Login event | Not for manual use\ncmd add join load %last-join%\ncmd add join let %last-join%[%p%] = %time%\ncmd add join save %last-join%\ncmd unregister join\ncmd trigger login join\n\ncmd create leave Leave event | Not for manual use\ncmd add leave load %last-join%\ncmd add leave %elapsed% = %time% - %last-join%[%p%]\ncmd add leave load %activity%\ncmd add leave if varset(%activity%[%p%]) = %false% then %activity%[%p%] = 0\ncmd add leave %activity%[%p%] = %activity%[%p%] + %elapsed%\ncmd add leave save %activity%\ncmd unregister leave\ncmd trigger leave leave\n```")
     else:
         embed = discord.Embed(name="", description="", color=0xff0000)
         embed.add_field(name="Usage", value="-tutorial <list / command_name>", inline=True)
@@ -314,5 +328,20 @@ async def tutorial(ctx, args=None):
 @bot.command(pass_context=True)
 async def invite(ctx):
     await bot.say("Tap the link below to invite me to your discord server!\nhttps://discordapp.com/api/oauth2/authorize?client_id=489013863467974660&permissions=8&scope=bot")
+
+@bot.command(pass_context=True)
+async def setprefix(ctx, pprefix=None):
+    if pprefix == None:
+        embed = discord.Embed(name="", description="", color=0xff0000)
+        embed.add_field(name="Usage", value="-setprefix <prefix>", inline=True)
+        await bot.say(embed=embed)
+    else:
+        fileopen = ctx.message.server.id + ".json"
+        file = open(fileopen, "w", encoding="utf-8")
+        data = {}
+        data["prefix"] = pprefix
+        json.dump(data, file, ensure_ascii=False)
+        file.close()
+        await bot.say(":white_check_mark: The new prefix for **{}** has been updated to: **{}**".format(ctx.message.server.name, data["prefix"]))
 
 bot.run(os.environ['BOT_TOKEN'])
