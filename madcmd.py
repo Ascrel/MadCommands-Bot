@@ -352,21 +352,25 @@ async def invite(ctx):
 
 @bot.command(pass_context=True)
 async def setprefix(ctx, pprefix=None):
-    fileopen = ctx.message.server.id + ".json"
-    file = open(fileopen, "r", encoding="utf-8")
-    predata = json.load(file)
-    prefix = predata["prefix"]
-    if pprefix == None:
-        embed = discord.Embed(name="", description="", color=0xff0000)
-        embed.add_field(name="Usage", value="{}setprefix <prefix>".format(prefix), inline=True)
-        await bot.say(embed=embed)
-    else:
+    if ctx.message.author.server_permissions.administrator:
         fileopen = ctx.message.server.id + ".json"
-        file = open(fileopen, "w", encoding="utf-8")
-        data = {}
-        data["prefix"] = pprefix
-        json.dump(data, file, ensure_ascii=False)
-        file.close()
-        await bot.say(":white_check_mark: The new prefix for **{}** has been updated to: **{}**".format(ctx.message.server.name, data["prefix"]))
+        file = open(fileopen, "r", encoding="utf-8")
+        predata = json.load(file)
+        prefix = predata["prefix"]
+        if pprefix == None:
+            embed = discord.Embed(name="", description="", color=0xff0000)
+            embed.add_field(name="Usage", value="{}setprefix <prefix>".format(prefix), inline=True)
+            await bot.say(embed=embed)
+        else:
+            fileopen = ctx.message.server.id + ".json"
+            file = open(fileopen, "w", encoding="utf-8")
+            data = {}
+            data["prefix"] = pprefix
+            json.dump(data, file, ensure_ascii=False)
+            file.close()
+            await bot.say(":white_check_mark: The new prefix for **{}** has been updated to: **{}**".format(ctx.message.server.name, data["prefix"]))
+    else:
+        embed=discord.Embed(title="Permission Denied.", description="You need `Adminstator` permission to use this command!.", color=0xff0000)
+        await bot.say(embed=embed)
 
 bot.run(os.environ['BOT_TOKEN'])
