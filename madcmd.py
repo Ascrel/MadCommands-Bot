@@ -3,20 +3,11 @@
 import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
-import json
 import os
 import asyncio
 
-
-async def get_pre(bot, message):
-    fileopen = message.server.id + ".json"
-    file = open(fileopen, "r", encoding="utf-8")
-    predata = json.load(file)
-    prefix = predata["prefix"]
-    return prefix
-
 Client = discord.Client()
-bot = commands.Bot(command_prefix=get_pre)
+bot = commands.Bot(command_prefix='-')
 bot.remove_command("help")
 description = "-cmd | XMagmaCreeperX"
 
@@ -33,24 +24,14 @@ async def on_ready():
 
 @bot.event
 async def on_server_join(server):
-    fileopen = server.id + ".json"
-    file = open(fileopen, "w", encoding="utf-8")
-    data = {}
-    data["prefix"] = "-"
-    json.dump(data, file, ensure_ascii=False)
-    file.close()
     await bot.send_message(server.owner, "Thank you **{}** for inviting me to your server: **{}**!\nMy prefix  is **-**\nType **-cmd** for the help menu.\n\nThis bot was coded by XMagmaCreeperX#3657".format(server.owner, server.name))
     me = await bot.get_user_info('352898973578690561')
     await bot.send_message(me, "===============================\nI have joined the server:\nName: **{}**\nID: **{}**\nOwner: **{}**\n\nIm in {} servers\n===============================".format(server.name, server.id, server.owner, len(bot.servers)))
 
 @bot.command(pass_context=True)
 async def help(ctx, cmd=None):
-    fileopen = ctx.message.server.id + ".json"
-    file = open(fileopen, "r", encoding="utf-8")
-    predata = json.load(file)
-    prefix = predata["prefix"]
     if cmd == None:
-        await bot.say("```\nType {}help <topicname> to show more details about:\n\nediting: how to define and edit your custom commands\nusage: how to run your custom commands\ncommands special commands to use in your scripts\nexpressions: how to write expressions and calculations\noperators: list of supported binary operatory\nfunctions: list of supported functions\nvariables: list of special pre-defined variables\nevents: list of supported event names\npermissions: permission nodes you can use\nlicense: license conditions for using this plugin\n```".format(prefix))
+        await bot.say("```\nType -help <topicname> to show more details about:\n\nediting: how to define and edit your custom commands\nusage: how to run your custom commands\ncommands special commands to use in your scripts\nexpressions: how to write expressions and calculations\noperators: list of supported binary operatory\nfunctions: list of supported functions\nvariables: list of special pre-defined variables\nevents: list of supported event names\npermissions: permission nodes you can use\nlicense: license conditions for using this plugin\n```")
     elif cmd =="editing":
         await bot.say("```\nThese commands will let you define custom commands and their procedures:\n\n/cmd install [<command_name>]\n/cmd create <command_name> [<description> [ | <usage>]]\n/cmd modify <command_name> <new_name> [<description> [ | <usage>]]\n/cmd delete <command_name> [<start_line_number>[..<end_line_number>]]\n/cmd add <command_name> [asop|ascon] <command> [<parameter>] ...\n/cmd edit <command_name> <line_number> [asop|ascon] <command> [<parameter>] ...\n/cmd insert <command_name> <line_number> [asop|ascon] <command> [<parameter>] ...\n/cmd list [<command_name>] [<start_line_number>[..<end_line_number>]]\n/cmd enable <command_name>\n/cmd disable <command_name>\n/cmd register <command_name>\n/cmd unregister <command_name>\n/cmd trigger [<event_name> [<command_name>]]\n/cmd config [<option_name> [<new_value>]]\n/cmd run <command> [<parameter>] ...\n/cmd running [<command_id>]\n/cmd kill <command_id>\n\nType -help <command> to get detailed help for a specific command.\n```")
     elif cmd == "install":
@@ -263,58 +244,50 @@ async def report(ctx, *, args=None):
 
 @bot.command(pass_context=True)
 async def cmd(ctx, command=None):
-    fileopen = ctx.message.server.id + ".json"
-    file = open(fileopen, "r", encoding="utf-8")
-    predata = json.load(file)
-    prefix = predata["prefix"]
     if command == None:
         embed = discord.Embed(name="", description="Here is a list of available commands.", color=0x00FFFF)
-        embed.add_field(name="Commands", value="{}cmd\n{}help\n{}tutorial\n{}tutadd\n{}setprefix\n{}invite\n{}report".format(prefix, prefix, prefix, prefix, prefix, prefix, prefix), inline=True)
-        embed.set_footer(text="Type {}cmd <command> to get more info about a specific command.".format(prefix), icon_url=embed.Empty)
+        embed.add_field(name="Commands", value="-cmd\n-help\n-tutorial\n-tutadd\n-invite\n-report", inline=True)
+        embed.set_footer(text="Type -cmd <command> to get more info about a specific command.", icon_url=embed.Empty)
         await bot.say(embed=embed)
     elif command == "cmd":
         embed = discord.Embed(name="cmd", description="Get a list of available commands", color=0x00FFFF)
-        embed.add_field(name="Usage", value="{}cmd [command]".format(prefix), inline=True)
+        embed.add_field(name="Usage", value="-cmd [command]", inline=True)
         await bot.say(embed=embed)
     elif command == "help":
         embed = discord.Embed(name="help", description="Get help of the topics in MadCommands", color=0x00FFFF)
-        embed.add_field(name="Usage", value="{}help [topic]".format(prefix), inline=True)
+        embed.add_field(name="Usage", value="-help [topic]", inline=True)
         await bot.say(embed=embed)
     elif command == "tutorial":
         embed = discord.Embed(name="tutorial", description="Get a list of tutorial commands and their codes", color=0x00FFFF)
-        embed.add_field(name="Usage", value="{}tutorial <list / command_name>".format(prefix), inline=True)
+        embed.add_field(name="Usage", value="-tutorial <list / command_name>", inline=True)
         await bot.say(embed=embed)
     elif command == "report":
         embed = discord.Embed(name="report", description="Report an issue with the bot", color=0x00FFFF)
-        embed.add_field(name="Usage", value="{}report <report message..>".format(prefix), inline=True)
+        embed.add_field(name="Usage", value="-report <report message..>", inline=True)
         await bot.say(embed=embed)
     elif command == "tutadd":
-        embed = discord.Embed(name="tutadd", description="Add a command to ({}tutorial list)".format(prefix), color=0x00FFFF)
-        embed.add_field(name="Usage", value="{}tutadd <command info..>".format(prefix), inline=True)
+        embed = discord.Embed(name="tutadd", description="Add a command to (-tutorial list)", color=0x00FFFF)
+        embed.add_field(name="Usage", value="-tutadd <command info..>", inline=True)
         await bot.say(embed=embed)
     elif command == "invite":
         embed = discord.Embed(name="invite", description="Invite the bot to your server", color=0x00FFFF)
-        embed.add_field(name="Usage", value="{}invite".format(prefix), inline=True)
+        embed.add_field(name="Usage", value="-invite", inline=True)
         await bot.say(embed=embed)
     elif command == "setprefix":
         embed = discord.Embed(name="setprefix", description="Change the bot prefix", color=0x00FFFF)
-        embed.add_field(name="Usage", value="{}setprefix <prefix>".format(prefix), inline=True)
+        embed.add_field(name="Usage", value="-setprefix <prefix>", inline=True)
         await bot.say(embed=embed)
     else:
         embed = discord.Embed(name="", description="Here is a list of available commands.", color=0x00FFFF)
-        embed.add_field(name="Commands", value="{}cmd\n{}help\n{}tutorial\n{}tutadd\n{}setprefix\n{}invite\n{}report".format(prefix, prefix, prefix, prefix, prefix, prefix, prefix), inline=True)
-        embed.set_footer(text="Type {}cmd <command> to get more info about a specific command.".format(prefix), icon_url=embed.Empty)
+        embed.add_field(name="Commands", value="-cmd\n-help\n-tutorial\n-tutadd\n-setprefix\n-invite\n-report", inline=True)
+        embed.set_footer(text="Type -cmd <command> to get more info about a specific command.", icon_url=embed.Empty)
         await bot.say(embed=embed)
 
 @bot.command(pass_context=True)
 async def tutadd(ctx, *, args=None):
-    fileopen = ctx.message.server.id + ".json"
-    file = open(fileopen, "r", encoding="utf-8")
-    predata = json.load(file)
-    prefix = predata["prefix"]
     if args == None:
         embed = discord.Embed(name="", description="", color=0xff0000)
-        embed.add_field(name="Usage", value="{}tutadd <command info..>".format(prefix), inline=True)
+        embed.add_field(name="Usage", value="-tutadd <command info..>", inline=True)
         embed.set_footer(text="Please make sure to add the command name, description, usage and code.", icon_url=embed.Empty)
         await bot.say(embed=embed)
     else:
@@ -324,18 +297,14 @@ async def tutadd(ctx, *, args=None):
 
 @bot.command(pass_context=True)
 async def tutorial(ctx, args=None):
-    fileopen = ctx.message.server.id + ".json"
-    file = open(fileopen, "r", encoding="utf-8")
-    predata = json.load(file)
-    prefix = predata["prefix"]
     if args == None:
         embed = discord.Embed(name="", description="", color=0xff0000)
-        embed.add_field(name="Usage", value="{}tutorial <list / command_name>".format(prefix), inline=True)
+        embed.add_field(name="Usage", value="-tutorial <list / command_name>", inline=True)
         await bot.say(embed=embed)
     elif args == "list":
         embed = discord.Embed(name="Tutorials List", description="", color=0x00ffff)
-        embed.add_field(name="Page 1", value="- Heal\n- Calculate-Activity", inline=True)
-        embed.set_footer(text="Type {}tutorial list <page> to go to another page // Type {}tutorial <command_name> to get the info of the command (usage, description, name, code)".format(prefix, prefix), icon_url=embed.Empty)
+        embed.add_field(name="Page 1", value="Heal\nActivity", inline=True)
+        embed.set_footer(text="Type -tutorial list <page> to go to another page // Type -tutorial <command_name> to get the info of the command (usage, description, name, code)", icon_url=embed.Empty)
         await bot.say(embed=embed)
     elif args == "heal":
         await bot.say("**Command Name:** Heal.\n**Command Description:** Heal yourself or another player.\n**Command Usage:** /heal [player]\n**Command Author:** XMagmaCreeperX#3657\n**Command Code:**\n```\ncmd create heal Heal your self or another player\ncmd add heal let %player% = %args%[1]\ncmd add heal if varset(%player%) then goto 6\ncmd add heal treat %p% 20\ncmd add heal message %p% §aYou have been healed!\ncmd add heal exit\ncmd add heal if %player% notin onlineplayers() then message %p% §c%player% is not online!\ncmd add heal if %player% notin onlineplayers() then exit\ncmd add heal treat %player% 20\ncmd add heal message %p% §aHealed %player%!\ncmd add heal exit\n```")
@@ -343,30 +312,11 @@ async def tutorial(ctx, args=None):
         await bot.say("**Command Name:** Calculate-Activity.\n**Command Description:** Calculate how long players have been online/\n**Command Usage:** This command is automatic, you don't manually use it\n**Command Author**: Ammar#7494\n**Command Code:**\n```\ncmd create join Login event | Not for manual use\ncmd add join load %last-join%\ncmd add join let %last-join%[%p%] = %time%\ncmd add join save %last-join%\ncmd unregister join\ncmd trigger login join\n\ncmd create leave Leave event | Not for manual use\ncmd add leave load %last-join%\ncmd add leave %elapsed% = %time% - %last-join%[%p%]\ncmd add leave load %activity%\ncmd add leave if varset(%activity%[%p%]) = %false% then %activity%[%p%] = 0\ncmd add leave %activity%[%p%] = %activity%[%p%] + %elapsed%\ncmd add leave save %activity%\ncmd unregister leave\ncmd trigger leave leave\n```")
     else:
         embed = discord.Embed(name="", description="", color=0xff0000)
-        embed.add_field(name="Usage", value="{}tutorial <list / command_name>".format(prefix), inline=True)
+        embed.add_field(name="Usage", value="-tutorial <list / command_name>", inline=True)
         await bot.say(embed=embed)
 
 @bot.command(pass_context=True)
 async def invite(ctx):
     await bot.say("Tap the link below to invite me to your discord server!\nhttps://discordapp.com/api/oauth2/authorize?client_id=489013863467974660&permissions=8&scope=bot")
-
-@bot.command(pass_context=True)
-async def setprefix(ctx, pprefix=None):
-    fileopen = ctx.message.server.id + ".json"
-    file = open(fileopen, "r", encoding="utf-8")
-    predata = json.load(file)
-    prefix = predata["prefix"]
-    if pprefix == None:
-        embed = discord.Embed(name="", description="", color=0xff0000)
-        embed.add_field(name="Usage", value="{}setprefix <prefix>".format(prefix), inline=True)
-        await bot.say(embed=embed)
-    else:
-        fileopen = ctx.message.server.id + ".json"
-        file = open(fileopen, "w", encoding="utf-8")
-        data = {}
-        data["prefix"] = pprefix
-        json.dump(data, file, ensure_ascii=False)
-        file.close()
-        await bot.say(":white_check_mark: The new prefix for **{}** has been updated to: **{}**".format(ctx.message.server.name, data["prefix"]))
 
 bot.run(os.environ['BOT_TOKEN'])
