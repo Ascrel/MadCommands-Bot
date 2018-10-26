@@ -362,7 +362,7 @@ async def setprefix(ctx, pprefix=None):
         await bot.say(embed=embed)
     else:
         fileopen = ctx.message.server.id + ".json"
-        file = open(fileopen, "w", encoding="utf-8")
+        file = open(fileopen, "w", encoding="utf-8") 
         data = {}
         data["prefix"] = pprefix
         json.dump(data, file, ensure_ascii=False)
