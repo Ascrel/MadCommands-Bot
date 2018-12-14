@@ -308,7 +308,7 @@ async def tutorial(ctx, args=None, page=None):
         	embed.set_footer(text="Type -tutorial list <page> to go to another page // Type -tutorial <command_name> to get the info of the command (usage, description, name, code)", icon_url=embed.Empty)
                await bot.say(embed=embed)
 	else page == "2":
-	       embed = discord.Embed(name="Tutorials List", description="", color=0x00ffff)
+	        embed = discord.Embed(name="Tutorials List", description="", color=0x00ffff)
                embed.add_field(name="Page 2/2", value="- CheckOP", inline=True)
                embed.set_footer(text="Type -tutorial list <page> to go to another page // Type -tutorial <command_name> to get the info of the command (usage, description, name, code)", icon_url=embed.Empty)
                await bot.say(embed=embed)
