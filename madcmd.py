@@ -325,7 +325,7 @@ async def tutorial(ctx, args=None):
 @bot.command(pass_context=True)
 async def invite(ctx):
     embed = discord.Embed(name="", description="", color=0xff0000)
-    embed.add_field(name="", value="[Click here to invite me to your discord server!](https://discordapp.com/api/oauth2/authorize?client_id=489013863467974660&permissions=8&scope=bot)", inline=False)
+    embed.add_field(name="", value="[Click here to invite me to your discord server!](https://discordapp.com/api/oauth2/authorize?client_id=489013863467974660&permissions=8&scope=bot)", inline=True)
     await bot.say(embed=embed)
 
 bot.run(os.environ['BOT_TOKEN'])
