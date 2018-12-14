@@ -303,15 +303,15 @@ async def tutorial(ctx, args=None, page=None):
         await bot.say(embed=embed)
     elif args == "list":
         if page == None or page == "1":
-	        embed = discord.Embed(name="Tutorials List", description="", color=0x00ffff)
-        	embed.add_field(name="Page 1/2", value="- Heal\n- Calculate-Avtivity\n- Vanish\n - Hud\n- Freeze/Unfreeze", inline=True)
-        	embed.set_footer(text="Type -tutorial list <page> to go to another page // Type -tutorial <command_name> to get the info of the command (usage, description, name, code)", icon_url=embed.Empty)
-               await bot.say(embed=embed)
+	    embed = discord.Embed(name="Tutorials List", description="", color=0x00ffff)
+            embed.add_field(name="Page 1/2", value="- Heal\n- Calculate-Avtivity\n- Vanish\n - Hud\n- Freeze/Unfreeze", inline=True)
+            embed.set_footer(text="Type -tutorial list <page> to go to another page // Type -tutorial <command_name> to get the info of the command (usage, description, name, code)", icon_url=embed.Empty)
+            await bot.say(embed=embed)
 	else page == "2":
-	        embed = discord.Embed(name="Tutorials List", description="", color=0x00ffff)
-               embed.add_field(name="Page 2/2", value="- CheckOP", inline=True)
-               embed.set_footer(text="Type -tutorial list <page> to go to another page // Type -tutorial <command_name> to get the info of the command (usage, description, name, code)", icon_url=embed.Empty)
-               await bot.say(embed=embed)
+	    embed = discord.Embed(name="Tutorials List", description="", color=0x00ffff)
+            embed.add_field(name="Page 2/2", value="- CheckOP", inline=True)
+            embed.set_footer(text="Type -tutorial list <page> to go to another page // Type -tutorial <command_name> to get the info of the command (usage, description, name, code)", icon_url=embed.Empty)
+            await bot.say(embed=embed)
     elif args == "heal":
         await bot.say("**Command Name:** Heal.\n**Command Description:** Heal yourself or another player.\n**Command Usage:** /heal [player]\n**Command Author:** XMagmaCreeperX#3657\n**Command Code:**\n```\ncmd create heal Heal your self or another player\ncmd add heal let %player% = %args%[1]\ncmd add heal if varset(%player%) then goto 6\ncmd add heal treat %p% 20\ncmd add heal message %p% §aYou have been healed!\ncmd add heal exit\ncmd add heal if %player% notin onlineplayers() then message %p% §c%player% is not online!\ncmd add heal if %player% notin onlineplayers() then exit\ncmd add heal treat %player% 20\ncmd add heal message %p% §aHealed %player%!\ncmd add heal exit\n```")
     elif args == "calculate-activity":
