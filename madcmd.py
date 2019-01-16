@@ -337,4 +337,10 @@ async def invite(ctx):
         embed.add_field(name="Invite the bot to your discord server", value="[Click here](https://discordapp.com/api/oauth2/authorize?client_id=489013863467974660&permissions=8&scope=bot)", inline=True)
         await bot.say(embed=embed)
 
+@bot.command(pass_context=True)
+async def about(ctx):
+    embed = discord.Embed(name="", description="", color=0x00FFFF)
+    embed.add_field(name="About the bot", value="This bot was created and developed by XMagmaCreeperX#3657, This bot is about a Minecraft plugin called MadCommands.", inline=True)
+    await bot.say(embed=embed)
+
 bot.run(os.environ['BOT_TOKEN'])
