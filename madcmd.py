@@ -246,7 +246,7 @@ async def report(ctx, *, args=None):
 async def cmd(ctx, command=None):
     if command == None:
         embed = discord.Embed(name="", description="Here is a list of available commands.", color=0x00FFFF)
-        embed.add_field(name="Commands", value="-cmd\n-help\n-tutorial\n-tutadd\n-invite\n-report", inline=True)
+        embed.add_field(name="Commands", value="-cmd\n-help\n-tutorial\n-tutadd\n-invite\n-report\n-about", inline=True)
         embed.set_footer(text="Type -cmd <command> to get more info about a specific command.", icon_url=embed.Empty)
         await bot.say(embed=embed)
     elif command == "cmd":
@@ -273,9 +273,9 @@ async def cmd(ctx, command=None):
         embed = discord.Embed(name="invite", description="Invite the bot to your server", color=0x00FFFF)
         embed.add_field(name="Usage", value="-invite", inline=True)
         await bot.say(embed=embed)
-    elif command == "setprefix":
-        embed = discord.Embed(name="setprefix", description="Change the bot prefix", color=0x00FFFF)
-        embed.add_field(name="Usage", value="-setprefix <prefix>", inline=True)
+    elif command == "about":
+        embed = discord.Embed(name="about", description="Gives credits and info about the bot", color=0x00FFFF)
+        embed.add_field(name="Usage", value="-about", inline=True)
         await bot.say(embed=embed)
     else:
         embed = discord.Embed(name="", description="Here is a list of available commands.", color=0x00FFFF)
