@@ -354,7 +354,7 @@ async def invite(ctx):
         embed.add_field(name="Invite the bot to your discord server", value="[Click here](https://discordapp.com/api/oauth2/authorize?client_id=489013863467974660&permissions=8&scope=bot)", inline=True)
         await bot.say(embed=embed)
     elif ctx.message.server.id == "382669571934388245":
-        await bot.say("This command is disabled in the leet discord.")
+        await bot.say("This command is disabled in the leet discord server.")
     else:
         embed = discord.Embed(name="", description="", color=0x00FFFF)
         embed.add_field(name="Invite the bot to your discord server", value="[Click here](https://discordapp.com/api/oauth2/authorize?client_id=489013863467974660&permissions=8&scope=bot)", inline=True)
