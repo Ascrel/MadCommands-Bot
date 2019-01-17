@@ -349,7 +349,9 @@ async def tutorial(ctx, args=None, page=None):
 
 @bot.command(pass_context=True)
 async def invite(ctx):
-    if ctx.message.server.id != "382669571934388245":
+    if ctx.message.server.id == "382669571934388245":
+        await bot.say("This command is disabled in the leet discord.")
+    else:
         embed = discord.Embed(name="", description="", color=0x00FFFF)
         embed.add_field(name="Invite the bot to your discord server", value="[Click here](https://discordapp.com/api/oauth2/authorize?client_id=489013863467974660&permissions=8&scope=bot)", inline=True)
         await bot.say(embed=embed)
