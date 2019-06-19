@@ -22,12 +22,6 @@ async def on_ready():
     print("==================================")
     await bot.change_presence(game=discord.Game(name="-cmd | XMagmaCreeperX"))
 
-@bot.event
-async def on_server_join(server):
-    await bot.send_message(server.owner, "Thank you **{}** for inviting me to your server: **{}**!\nMy prefix  is **-**\nType **-cmd** for the help menu.\n\nThis bot was coded by XMagmaCreeperX#3657".format(server.owner, server.name))
-    me = await bot.get_user_info('352898973578690561')
-    await bot.send_message(me, "===============================\nI have joined the server:\nName: **{}**\nID: **{}**\nOwner: **{}**\n\nIm in {} servers\n===============================".format(server.name, server.id, server.owner, len(bot.servers)))
-
 @bot.command(pass_context=True)
 async def help(ctx, cmd=None):
     if cmd == None:
