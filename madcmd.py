@@ -22,7 +22,6 @@ async def on_ready():
 
 @bot.command(pass_context=True)
 async def help(ctx, cmd=None):
-    cmd = cmd.lower()
     if cmd == None:
         await bot.say("```java\nType -help <topicname> to show more details about:\n\nediting: how to define and edit your custom commands\nusage: how to run your custom commands\ncommands: special commands to use in your scripts\nexpressions: how to write expressions and calculations\noperators: list of supported binary operatory\nfunctions: list of supported functions\nvariables: list of special pre-defined variables\nevents: list of supported event names\npermissions: permission nodes you can use\nlicense: license conditions for using this plugin\n```")
     elif cmd =="editing":
@@ -250,7 +249,7 @@ async def report(ctx, *, args=None):
 
 @bot.command(pass_context=True)
 async def cmd(ctx, command=None):
-    command = command.lower()
+    print(command.lower())
     if command == None:
         embed = discord.Embed(name="", description="Here is a list of available commands.", color=0x00FFFF)
         embed.add_field(name="Commands", value="-cmd\n-help\n-tutorial\n-tutadd\n-invite\n-report\n-about", inline=True)
@@ -304,7 +303,6 @@ async def tutadd(ctx, *, args=None):
 
 @bot.command(pass_context=True)
 async def tutorial(ctx, args=None, page=None):
-    args = args.lower()
     if args == None:
         embed = discord.Embed(name="", description="", color=0xff0000)
         embed.add_field(name="Usage", value="-tutorial <list / (command_name)>", inline=True)
