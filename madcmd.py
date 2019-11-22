@@ -24,6 +24,7 @@ async def on_ready():
 async def help(ctx, cmd=None):
     if cmd == None:
         await bot.say("```java\nType -help <topicname> to show more details about:\n\nediting: how to define and edit your custom commands\nusage: how to run your custom commands\ncommands: special commands to use in your scripts\nexpressions: how to write expressions and calculations\noperators: list of supported binary operatory\nfunctions: list of supported functions\nvariables: list of special pre-defined variables\nevents: list of supported event names\npermissions: permission nodes you can use\nlicense: license conditions for using this plugin\n```")
+    cmd = cmd.lower()
     elif cmd =="editing":
         await bot.say("```java\nThese commands will let you define custom commands and their procedures:\n\n/cmd install [<command_name>]\n/cmd create <command_name> [<description> [ | <usage>]]\n/cmd modify <command_name> <new_name> [<description> [ | <usage>]]\n/cmd delete <command_name> [<start_line_number>[..<end_line_number>]]\n/cmd add <command_name> [asop|ascon] <command> [<parameter>] ...\n/cmd edit <command_name> <line_number> [asop|ascon] <command> [<parameter>] ...\n/cmd insert <command_name> <line_number> [asop|ascon] <command> [<parameter>] ...\n/cmd list [<command_name>] [<start_line_number>[..<end_line_number>]]\n/cmd enable <command_name>\n/cmd disable <command_name>\n/cmd register <command_name>\n/cmd unregister <command_name>\n/cmd trigger [<event_name> [<command_name>]]\n/cmd config [<option_name> [<new_value>]]\n/cmd run <command> [<parameter>] ...\n/cmd running [<command_id>]\n/cmd kill <command_id>\n\nType -help <command> to get detailed help for a specific command.\n```")
     elif cmd == "install":
@@ -249,12 +250,12 @@ async def report(ctx, *, args=None):
 
 @bot.command(pass_context=True)
 async def cmd(ctx, command=None):
-    print(command.lower())
     if command == None:
         embed = discord.Embed(name="", description="Here is a list of available commands.", color=0x00FFFF)
         embed.add_field(name="Commands", value="-cmd\n-help\n-tutorial\n-tutadd\n-invite\n-report\n-about", inline=True)
         embed.set_footer(text="Type -cmd <command> to get more info about a specific command.", icon_url=embed.Empty)
         await bot.say(embed=embed)
+    command = command.lower()
     elif command == "cmd":
         embed = discord.Embed(name="cmd", description="Get a list of available commands", color=0x00FFFF)
         embed.add_field(name="Usage", value="-cmd [command]", inline=True)
@@ -307,6 +308,7 @@ async def tutorial(ctx, args=None, page=None):
         embed = discord.Embed(name="", description="", color=0xff0000)
         embed.add_field(name="Usage", value="-tutorial <list / (command_name)>", inline=True)
         await bot.say(embed=embed)
+    args = args.lower()
     elif args == "list":
         if page == None or page == "1":
             embed = discord.Embed(name="Tutorials List", description="", color=0x00ffff)
