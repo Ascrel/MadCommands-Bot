@@ -318,7 +318,7 @@ async def tutorial(ctx, args=None, page=None):
             await bot.say(embed=embed)
         elif page == "3":
             embed = discord.Embed(name="Tutorials List", description="", color=0x00ffff)
-            embed.add_field(name="Page 3/3", value="- Feed\n- Warn/Warns\n- Mute/Unmute", inline=True)
+            embed.add_field(name="Page 3/3", value="- Feed\n- Warn/Warns\n- Mute/Unmute\n- DetectPlayer", inline=True)
             embed.set_footer(text="Type -tutorial list <page> to go to another page // Type -tutorial <command_name> to get the info of the command (usage, description, name, code)", icon_url=embed.Empty)
             await bot.say(embed=embed)
     elif args.lower() == "heal":
@@ -353,6 +353,8 @@ async def tutorial(ctx, args=None, page=None):
         await bot.say('**Command Name:** Mute/Unmute\n**Command Description:** Mute someone or unmute a muted player\n**Command Usage:** /mute <player> | /unmute <player>\n**Command Author:** XMagmaCreeperX#3657\n**Command Code:**\n```\ncmd create mute Mute a player\ncmd add mute let %player% = lowercase(%args%[1])\ncmd add mute if varset(%player%) = %false% then message %p% Usage: /mute <player>\ncmd add mute if varset(%player%) = %false% then exit\ncmd add mute load %muted%\ncmd add mute let %muted%[%player%] = \"true\"\ncmd add mute save %muted%\ncmd add mute message %p% §a%player% is now muted.\ncmd add mute exit\n```')
         await bot.say('```\ncmd create unmute Unmute a muted player\ncmd add unmute let %player% = lowercase(%args%[1])\ncmd add unmute if varset(%player%) = %false% then message %p% Usage: /unmute <player>\ncmd add unmute if varset(%player%) = %false% then exit\ncmd add unmute load %muted%\ncmd add unmute let %muted%[%player%] = \"false\"\ncmd add unmute save %muted%\ncmd add unmute message %p% §a%player% is now unmuted.\ncmd add unmute exit\n```')
         await bot.say('```\ncmd create chat Chat trigger\ncmd add chat let %player% = lowercase(%args%[2])\ncmd add chat load %muted%\ncmd add chat if varset(%muted%[%player%]) = %false% then exit\ncmd add chat if %muted%[%player%] = \"true\" then cancel\ncmd trigger chat chat\n```')
+    elif args.lower() == "detectplayer" or args.lower() == "detect":
+        await bot.say('**Command Name** Detect Player\n**Command Description:** To be able to Detect if player is inside a chosen set area with cords.\n**Command Usage:** /detect\n**Command Author:** HBIDamian#1337\n**Note:** Make sure you put the correct cords in the right place for it to work, the "min" and "max" variables are the variables to edit to make this work.\n**Command Code:**\n```\ncmd create detect\ncmd add detect let %minX% = 10\ncmd add detect let %minY% = 10\ncmd add detect let %minZ% = 10\ncmd add detect let %maxX% = 200  \ncmd add detect let %maxY% = 200\ncmd add detect let %maxZ% = 200\ncmd add detect let %status% = playerstatus(%p%)\ncmd add detect let %playerX% = %status%[\"x\"]\ncmd add detect let %playerY% = %status%[\"y\"]\ncmd add detect let %playerZ% = %status%[\"z\"]\ncmd add detect if (%playerX% >= %minX%) and (%playerX% <= %maxX%) and (%playerY% >= %minY%) and (%playerY% <= %maxY%) and (%playerZ% >= %minZ%) and (%playerZ% <= %maxZ%) then goto 14\ncmd add detect message %p% Outside of area\ncmd add detect exit\ncmd add detect message %p% Inside of Area\ncmd add detect exit\n```')
     else:
         embed = discord.Embed(name="", description="", color=0xff0000)
         embed.add_field(name="Usage", value="-tutorial <list / command_name>", inline=True)
