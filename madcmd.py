@@ -241,7 +241,7 @@ async def help(ctx, cmd=None):
 async def report(ctx, *, args=None):
     if args == None:
         embed = discord.Embed(name="", description="", color=0xff0000)
-        embed.add_field(name="Usage", value="-report <report message..>", inline=True)
+        embed.add_field(name="Usage", value="-report <report message...>", inline=True)
         await bot.say(embed=embed)
     else:
         me = await bot.get_user_info('352898973578690561')
