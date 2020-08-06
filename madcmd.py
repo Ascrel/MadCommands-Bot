@@ -17,7 +17,7 @@ async def on_ready():
     print("Bot is ready")
     print(" ")
     print("==================================")
-    await bot.change_presence(discord.Game("-cmd | Acsrel"))
+    await bot.change_presence(activity=discord.Game("-cmd | Acsrel"))
 
 @bot.command(pass_context=True)
 async def help(ctx, cmd=None):
